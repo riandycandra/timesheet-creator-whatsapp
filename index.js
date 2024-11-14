@@ -4,7 +4,10 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const service = require('./service');
 
 const client = new Client({
-  authStrategy: new LocalAuth({ clientId: "bot-session" }) // Save session locally
+  authStrategy: new LocalAuth({ clientId: "bot-session" }), // Save session locally,
+  puppeteer: {
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  }
 });
 
 client.on('qr', (qr) => {
