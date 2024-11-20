@@ -22,6 +22,8 @@ client.on('ready', () => {
 client.on('message', message => {
     let handle = service.handleString(message.body);
 
+    console.log(typeof handle);
+
     // check handle is boolean or not
     if(typeof handle === 'boolean'){
       
