@@ -3,11 +3,16 @@ const {
   Timesheet
 } = require('./models');
 
+const { Op, Sequelize } = require('sequelize');
+const fs = require('fs');
+const Excel = require('exceljs');
+
 const moment = require('moment');
 
 function handleString(input) {
   const taskRegex = /^\.task (.+)$/;
   const descriptionRegex = /^\.desc (.+)$/;
+  const downloadRegex = /^\.download (.+)$/;
 
   if (taskRegex.test(input)) {
     const [, taskText] = input.match(taskRegex);
@@ -15,6 +20,8 @@ function handleString(input) {
   } else if (descriptionRegex.test(input)) {
     const [, descriptionText] = input.match(descriptionRegex);
     return insertDescription(descriptionText);
+  } else if (downloadRegex.test(input)) {
+    return download();
   } else {
 
     console.log("input : ", input);
@@ -106,8 +113,48 @@ async function insertDescription(descriptionText) {
 
 }
 
+const download = async () => {
+  let month = moment().format('MM');
+  let year = moment().format('YYYY');
+
+  // get latest day of the month
+  let lastDay = moment().endOf('month').format('DD');
+
+  let data = await Timesheet.findAll({
+    where: {
+      // get month 
+      date: {
+        [Op.between]: [`${year}-${month}-01`, `${year}-${month}-${lastDay}`]
+      }
+    },
+    raw: true,
+  });
+
+  const workbook = new Excel.Workbook();
+  const worksheet = workbook.addWorksheet('Timesheet');
+
+  worksheet.columns = [
+    { header: 'Date', key: 'date', width: 50 },
+    { header: 'Task', key: 'task', width: 50 },
+    { header: 'Description', key: 'description', width: 50 },
+  ];
+
+  data.forEach(async (item) => {
+    worksheet.addRow({
+      date: moment(item.date).locale('id').format('DD MMMM Y'),
+      task: item.task,
+      description: item.description,
+    });
+  });
+
+  const buffer = await workbook.xlsx.writeBuffer();
+
+  return buffer
+}
+
 module.exports = {
   handleString,
   insertTask,
   insertDescription,
+  download
 }
