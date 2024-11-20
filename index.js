@@ -19,28 +19,28 @@ client.on('ready', () => {
     console.log('WhatsApp bot is ready!');
 });
 
-client.on('message', message => {
-    let handle = service.handleString(message.body);
+client.on('message', async (message) => {
+    let handle = await service.handleString(message.body);
 
-    console.log(typeof handle, handle);
+    console.log(handle, typeof handle);
 
     // check handle is boolean or not
-    // if(typeof handle === 'boolean'){
+    if(typeof handle === 'boolean'){
       
-    //   if(handle){
-    //     message.reply('Your task has been added boss.');
-    //   } else {
-    //     message.reply('Invalid command boss.');
-    //   }
+      if(handle){
+        message.reply('Your task has been added boss.');
+      } else {
+        message.reply('Invalid command boss.');
+      }
 
-    // } else {
-    //   const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    } else {
+      const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-    //   const media = MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
-    //   client.sendMessage(message.from, media);
-    //   message.reply('Here is your timesheet boss.');
+      const media = MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
+      client.sendMessage(message.from, media);
+      message.reply('Here is your timesheet boss.');
 
-    // }
+    }
 });
 
 client.initialize();

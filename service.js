@@ -9,19 +9,19 @@ const Excel = require('exceljs');
 
 const moment = require('moment');
 
-function handleString(input) {
+async function handleString(input) {
   const taskRegex = /^\.task (.+)$/;
   const descriptionRegex = /^\.desc (.+)$/;
   const downloadRegex = /^\.download (.+)$/;
 
   if (taskRegex.test(input)) {
     const [, taskText] = input.match(taskRegex);
-    return insertTask(taskText);
+    return await insertTask(taskText);
   } else if (descriptionRegex.test(input)) {
     const [, descriptionText] = input.match(descriptionRegex);
-    return insertDescription(descriptionText);
+    return await insertDescription(descriptionText);
   } else if (downloadRegex.test(input)) {
-    return download();
+    return await download();
   } else {
 
     console.log("input : ", input);
