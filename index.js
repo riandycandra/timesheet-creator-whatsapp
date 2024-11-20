@@ -22,8 +22,6 @@ client.on('ready', () => {
 client.on('message', async (message) => {
     let handle = await service.handleString(message.body);
 
-    console.log(handle, typeof handle);
-
     // check handle is boolean or not
     if(typeof handle === 'boolean'){
       
@@ -37,7 +35,7 @@ client.on('message', async (message) => {
       const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
       const media = MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
-      client.sendMessage(message.from, media);
+      await client.sendMessage(message.from, media);
       message.reply('Here is your timesheet boss.');
 
     }
