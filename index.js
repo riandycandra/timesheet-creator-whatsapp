@@ -34,7 +34,7 @@ client.on('message', async (message) => {
     } else {
       const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-      const media = MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
+      const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
       await client.sendMessage(message.from, media);
       message.reply('Here is your timesheet boss.');
 
