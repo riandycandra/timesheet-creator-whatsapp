@@ -111,7 +111,7 @@ async function scrapeLogatMulia() {
         const ngcSection = $('div.ngc-title:contains("Emas")').parent();
         const currentPrice = ngcSection.find('p.price > span.current').text().trim();
 
-        if (lastPrice !== currentPrice) {
+        if (lastPrice !== currentPrice && currentPrice != "") {
           console.log('Price has changed!');
           console.log('Old Price:', lastPrice);
           console.log('New Price:', currentPrice);
