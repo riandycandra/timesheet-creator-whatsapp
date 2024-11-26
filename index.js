@@ -10,6 +10,8 @@ const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const service = require('./service');
 const { Phone } = require('./models');
 
+const cron = require('node-cron');
+
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: "bot-session" }), // Save session locally,
   puppeteer: {
@@ -26,29 +28,41 @@ client.on('ready', () => {
     console.log('WhatsApp bot is ready!');
 });
 
-client.on('message', async (message) => {
-    let handle = await service.handleString(message.body);
+// client.on('message', async (message) => {
+//     let handle = await service.handleString(message.body);
 
-    // check handle is boolean or not
-    if(typeof handle === 'boolean'){
+//     // check handle is boolean or not
+//     if(typeof handle === 'boolean'){
       
-      if(handle){
-        message.reply('Your task has been added boss.');
-      } else {
-        message.reply('Invalid command boss.');
-      }
+//       if(handle){
+//         message.reply('Your task has been added boss.');
+//       } else {
+//         message.reply('Invalid command boss.');
+//       }
 
-    } else {
-      const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+//     } else {
+//       const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-      const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
-      await client.sendMessage(message.from, media);
-      message.reply('Here is your timesheet boss.');
+//       const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
+//       await client.sendMessage(message.from, media);
+//       message.reply('Here is your timesheet boss.');
 
-    }
-});
+//     }
+// });
 
 client.initialize();
+
+cron.schedule('8 9 * * *', async () => {
+
+  let number = await Phone.findOne({
+    where: {
+      owner: '1'
+    },
+    raw: true,
+  });
+
+  await client.sendMessage(`${number.phone}@c.us`, 'Cronjob coy');
+});
 
 // bot logam mulia
 // TODO: separate to another file
