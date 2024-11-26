@@ -1,2 +1,8 @@
 
-Personal project, used with [Timesheet Tracker](https://github.com/riandycandra/timesheet-tracker) for creating daily log using WA (im too lazy to access the web daily xD)
+## My whatsapp bot personal assistant ✨
+
+## Feature :
+- Create daily timesheet
+- Download report timesheet
+- Daily reminder to fill in the timesheet
+- Gold price tracker from [logammulia.com](https://logammulia.com)
