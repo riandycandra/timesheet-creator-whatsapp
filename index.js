@@ -52,7 +52,7 @@ client.on('ready', () => {
 
 client.initialize();
 
-cron.schedule('8 9 * * *', async () => {
+cron.schedule('30 17 * * *', async () => {
 
   let number = await Phone.findOne({
     where: {
@@ -61,7 +61,7 @@ cron.schedule('8 9 * * *', async () => {
     raw: true,
   });
 
-  await client.sendMessage(`${number.phone}@c.us`, 'Cronjob coy');
+  await client.sendMessage(`${number.phone}@c.us`, 'Jangan lupa isi timesheet boss!');
 });
 
 // bot logam mulia
