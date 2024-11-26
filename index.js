@@ -28,27 +28,27 @@ client.on('ready', () => {
     console.log('WhatsApp bot is ready!');
 });
 
-// client.on('message', async (message) => {
-//     let handle = await service.handleString(message.body);
+client.on('message', async (message) => {
+    let handle = await service.handleString(message.body);
 
-//     // check handle is boolean or not
-//     if(typeof handle === 'boolean'){
+    // check handle is boolean or not
+    if(typeof handle === 'boolean'){
       
-//       if(handle){
-//         message.reply('Your task has been added boss.');
-//       } else {
-//         message.reply('Invalid command boss.');
-//       }
+      if(handle){
+        message.reply('Your task has been added boss.');
+      } else {
+        message.reply('Invalid command boss.');
+      }
 
-//     } else {
-//       const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    } else {
+      const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-//       const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
-//       await client.sendMessage(message.from, media);
-//       message.reply('Here is your timesheet boss.');
+      const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
+      await client.sendMessage(message.from, media);
+      message.reply('Here is your timesheet boss.');
 
-//     }
-// });
+    }
+});
 
 client.initialize();
 
@@ -71,7 +71,7 @@ const cheerio = require('cheerio');
 
 let lastPrice = null;
 
-async function scrapeLogatMulia() {
+async function scrapeLogamMulia() {
     try {
         // Launch the browser with specific configurations
         const browser = await puppeteer.launch({
@@ -147,5 +147,5 @@ async function scrapeLogatMulia() {
 }
 
 
-setInterval(scrapeLogatMulia, 60000);
-scrapeLogatMulia()
+setInterval(scrapeLogamMulia, 60000);
+scrapeLogamMulia()
