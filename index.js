@@ -141,9 +141,11 @@ async function scrapeLogamMulia() {
 
           let phones = await Phone.findAll({ raw: true });
 
-          phones.forEach(async (phone) => {
-            await client.sendMessage(`${phone.phone}@c.us`, 'Harga emas berubah bos. ' + currentPrice);
-          });
+          if(lastPrice != null) {
+            phones.forEach(async (phone) => {
+              await client.sendMessage(`${phone.phone}@c.us`, 'Harga emas berubah bos. ' + currentPrice);
+            });
+          }
         } else {
           console.log('Price has not changed. Current Price:', currentPrice);
         }
@@ -154,5 +156,5 @@ async function scrapeLogamMulia() {
 }
 
 
-// setInterval(scrapeLogamMulia, 60000);
-// scrapeLogamMulia()
+setInterval(scrapeLogamMulia, 60000);
+scrapeLogamMulia()
