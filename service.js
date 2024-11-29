@@ -4,15 +4,17 @@ const {
 } = require('./models');
 
 const { Op, Sequelize } = require('sequelize');
-const fs = require('fs');
 const Excel = require('exceljs');
 
 const moment = require('moment');
 
+const gitlab = require('./gitlab_activity');
+
 async function handleString(input) {
   const taskRegex = /^\.task (.+)$/;
   const descriptionRegex = /^\.desc (.+)$/;
-  const downloadRegex = /^\.download (.+)$/;
+  const downloadRegex = /^\.download$/;
+  const gitlabRegex = /^\.gitlab$/;
 
   if (taskRegex.test(input)) {
     const [, taskText] = input.match(taskRegex);
@@ -22,6 +24,8 @@ async function handleString(input) {
     return await insertDescription(descriptionText);
   } else if (downloadRegex.test(input)) {
     return await download();
+  } else if (gitlabRegex.test(input)) {
+    return await gitlab.main();
   } else {
 
     console.log("input : ", input);

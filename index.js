@@ -43,10 +43,17 @@ client.on('message', async (message) => {
     } else {
       const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-      const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
-      await client.sendMessage(message.from, media);
-      message.reply('Here is your timesheet boss.');
+      if(message.body == '.download') {
+        const media = new MessageMedia(mimeType, handle.toString('base64'), 'Timesheet.xlsx');
+        await client.sendMessage(message.from, media);
+        message.reply('Here is your timesheet boss.');
+      } else {
 
+        const media = new MessageMedia(mimeType, handle.toString('base64'), 'Gitlab Activity.xlsx');
+        await client.sendMessage(message.from, media);
+        message.reply('Here is your activity report boss.');
+
+      }
     }
 });
 
@@ -147,5 +154,5 @@ async function scrapeLogamMulia() {
 }
 
 
-setInterval(scrapeLogamMulia, 60000);
-scrapeLogamMulia()
+// setInterval(scrapeLogamMulia, 60000);
+// scrapeLogamMulia()
