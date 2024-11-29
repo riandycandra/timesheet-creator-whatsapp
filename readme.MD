@@ -6,3 +6,4 @@
 - Download report timesheet
 - Daily reminder to fill in the timesheet
 - Gold price tracker from [logammulia.com](https://logammulia.com)
+- Gitlab activity reporter
