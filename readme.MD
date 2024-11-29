@@ -1,5 +1,5 @@
 
-## My whatsapp bot personal assistant ✨
+<h1 align="center">My whatsapp bot personal assistant ✨</h1>
 
 ## Feature :
 - Create daily timesheet
