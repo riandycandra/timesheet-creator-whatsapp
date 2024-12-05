@@ -59,7 +59,7 @@ client.on('message', async (message) => {
 
 client.initialize();
 
-cron.schedule('30 17 * * *', async () => {
+cron.schedule('30 17 * * 1-5', async () => {
 
   let number = await Phone.findOne({
     where: {
